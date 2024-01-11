@@ -1,4 +1,4 @@
-[/](index)
+[< index](/)
 
 # Putting The Rust In GitHub Actions
 

@@ -1,3 +1,5 @@
-# Welcome
+# blog
 
-here my blog will live
+Listing:
+
+* [Putting The Rust In GitHub Actions](/rusty_github_actions.html)
