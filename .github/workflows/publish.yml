@@ -13,6 +13,9 @@ concurrency:
   group: "pages"
   cancel-in-progress: false
 
+env:
+  CARGO_TERM_COLOR: always
+
 jobs:
 
   publish:
@@ -25,7 +28,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        
+    
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@v1
+        with:
+          toolchain: stable
+
+      - name: Cache dependencies
+        uses: Swatinem/rust-cache@v2.2.1
+        with:
+          workspaces: markdown_to_html
+    
+      - name: Build
+        working-directory: markdown_to_html
+        run: cargo build --release
+
+      - name: Generate
+        run: ./markdown_to_html/target/release/markdown_to_html
+
       - name: Setup
         uses: actions/configure-pages@v4
         
