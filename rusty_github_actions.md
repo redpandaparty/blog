@@ -229,8 +229,6 @@ this automatically. We also define an environment variable that contains the eve
 will be either `schedule`, `issues` or `pull_request`. Lastly, we put the issue or event number
 in a variable.
 
-## Your pull request may be an issue
-
 I somehow never noticed that issues and pull requests share their IDs. If you create a new
 repository and create an issue, then create a pull request, they will have numbers #1 and #2. The
 same happens in the API. Listing issues with the GitHub API (`/issues`) returns both issues and
@@ -240,8 +238,6 @@ for that. Moreover, to access the "number", you must use `github.event.pull_requ
 pull request event was triggered, `github.event.issue.number` if it was triggered by an "issues"
 event. Guess what API endpoint you have to use to post comments on a pull request? It's
 `/issues/comments`...
-
-## GitHub Actions workflow
 
 ```yaml
 jobs:
