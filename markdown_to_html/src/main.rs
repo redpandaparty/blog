@@ -8,7 +8,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             std::fs::write(
                 &output_path,
                 format!(
-                    r#"""<!DOCTYPE html>
+                    r#"<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -18,7 +18,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 <body>
 {}
 </body>
-</html>"""#,
+</html>"#,
                     entry
                         .path()
                         .file_stem()
