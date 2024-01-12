@@ -12,8 +12,26 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <title>{}</title>
+    <style>
+        html, body {
+            overflow-x: hidden;
+        }
+        body {
+            position: relative;
+            box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+        }
+        pre {
+            overflow-x: scroll;
+        }
+        img {
+            max-width: 100%;
+        }
+    </style>
 </head>
 <body>
 {}
