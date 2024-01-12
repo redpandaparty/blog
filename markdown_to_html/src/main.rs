@@ -19,6 +19,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         html, body {{
             overflow-x: hidden;
         }}
+        @media (prefers-color-scheme: dark) {{
+            body {{
+                color: #fafafa;
+                background-color: #111;
+            }}
+        }}
         body {{
             position: relative;
             box-sizing: border-box;
