@@ -43,6 +43,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     </style>
 </head>
 <body>
+<a href="/blog">home</a>
 <main>
 {}
 </main>

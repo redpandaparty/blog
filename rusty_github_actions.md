@@ -1,5 +1,3 @@
-[< index](./index)
-
 # Putting The Rust In GitHub Actions
 
 11-01-2024
