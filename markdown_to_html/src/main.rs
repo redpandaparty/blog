@@ -43,7 +43,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     </style>
 </head>
 <body>
+<main>
 {}
+</main>
 </body>
 </html>"#,
                     entry
