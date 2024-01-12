@@ -16,21 +16,21 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     <meta name="apple-mobile-web-app-capable" content="yes">
     <title>{}</title>
     <style>
-        html, body {
+        html, body {{
             overflow-x: hidden;
-        }
-        body {
+        }}
+        body {{
             position: relative;
             box-sizing: border-box;
             -webkit-box-sizing: border-box;
             -moz-box-sizing: border-box;
-        }
-        pre {
+        }}
+        pre {{
             overflow-x: scroll;
-        }
-        img {
+        }}
+        img {{
             max-width: 100%;
-        }
+        }}
     </style>
 </head>
 <body>
