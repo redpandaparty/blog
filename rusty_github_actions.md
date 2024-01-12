@@ -7,7 +7,7 @@
 GitHub Actions feels like a great idea that is poorly executed. Automating all secondary processes
 in software development (code formatting, linting, testing, build, release, etc.) is key to being
 able to work productively on large software projects. GitHub Actions solves this problem in the
-worst possible way. But since it is baked in GitHub, it is now the de facto standard for workflow
+worst possible way. But since it is backed in GitHub, it is now the de facto standard for workflow
 automation.
 
 What GitHub Actions is: Throw config files together to automatically run commands on certain
@@ -18,13 +18,12 @@ in the same way they write software.
 Unfortunately, YAML files and a clunky UI don't make for a great developer experience. Awaiting a
 better solution, we can hide the pain by painting over GitHub Actions with a thick layer of Rust.
 
-The idea is: Make a workflow in Rust with the excellent [`octocrab` crate](https://github.com/XAMPPRocky/octocrab).
-Use a minimal GitHub Actions workflow to run it.
+The idea is: Make a workflow in Rust with the excellent [`octocrab` crate](https://github.com/XAMPPRocky/octocrab). Use a minimal GitHub Actions workflow to run it.
 
-For storytelling purposes, let us create a workflow that ensures that all open issues have at
-least one of a required set of labels.
+For storytelling purposes, let us create a workflow that ensures that all open issues in our repo
+have at least one of a required set of labels.
 
-I opted to put the Rust project inside the `.github` directory close to where the rest of the CI
+I opted to put the Rust project inside the `.github` directory, close to where the rest of the CI
 stuff lives, in `.github/actions/issue_labels_check`:
 
 ```
@@ -44,7 +43,7 @@ We will be using three crates:
 * `octocrab` for interacting with GitHub.
 * `tokio` with a minimal feature set for our async executor (required for `octocrab`).
 
-#### `Cargo.toml`
+Let's start with the project `Cargo.toml`:
 
 ```toml
 [package]
@@ -61,7 +60,7 @@ tokio = { version = "1.0", default_features = false, features = [
 ] }
 ```
 
-First, let us create a static list of accepted labels:
+This is the list of accepted labels:
 
 ```rust
 static LABEL_SET: [&str; 3] = ["bug", "enhancement", "idea"];
@@ -107,8 +106,7 @@ let issue_number = match std::env::args().nth(1) {
 };
 ```
 
-Here comes the part where we use `octocrab` to connect to GitHub, and do all the magic:
-
+Here comes the part where we use `octocrab` to connect to GitHub, and do all the magic.
 First, we extract the owner and repository name from the repository slug we pulled from the
 environment variable:
 
@@ -128,7 +126,7 @@ let octocrab = octocrab::OctocrabBuilder::default()
 let issue_handler = octocrab.issues(owner, repository);
 ```
 
-Thrid, depending on whether the caller passed a specific issue:
+Third, depending on whether the caller passed a specific issue number:
 
 ```rust
 if let Some(issue_number) = issue_number {
@@ -186,12 +184,11 @@ async fn check_issue(
 }
 ```
 
-We still need a GitHub Actions workflow to actually run the thing though.
-
-Let's name it: `issue_labels_check.yaml`. The first part:
+We still need a GitHub Actions workflow to actually run the thing though. Let's name it:
+`issue_labels_check.yaml`, and start of with:
 
 ```yaml
-name: issue labels check
+name: "issue labels check"
 
 env:
   CARGO_TERM_COLOR: always
@@ -221,7 +218,7 @@ on:
     types: [opened]
 ```
 
-(Monday 9am is the perfect time to bother people.)
+(Monday 8am is the perfect time to bother people.)
 
 The workflow has a single job: `check`. In it, we pass on the GitHub Actions built-in token to
 the environment variable that our Rust program expects. For security reasons, GitHub does not do
@@ -238,6 +235,8 @@ for that. Moreover, to access the "number", you must use `github.event.pull_requ
 pull request event was triggered, `github.event.issue.number` if it was triggered by an "issues"
 event. Guess what API endpoint you have to use to post comments on a pull request? It's
 `/issues/comments`...
+
+Anyway, let's initialize the `check` job:
 
 ```yaml
 jobs:
@@ -283,15 +282,14 @@ workflow.
 
 The `rust-cache` step helps to speed up the workflow file. It still takes a bit too long for a
 simple action. Especially compared to running a bash file. It would probably be better to compile
-the action in a separate workflow, upload the binary as artifact and then download and run it.
-That would be a significant speed up.
+the action in a separate workflow, upload the binary as an artifact and then download and run it.
 
 Anyway, our bot now works and posts comments on unlabeled issues:
 
 ![Screenshot of GitHub Actions bot in action](img/rusty_github_actions__bot_in_action.png)
 
 I enjoyed this way of writing a GitHub workflow. Especially compared to the bash-based monstrosities
-that [GitHub themselves are cooking up](https://docs.github.com/en/actions/using-workflows/using-github-cli-in-workflows):
+that [GitHub themselves proposes for a similar task](https://docs.github.com/en/actions/using-workflows/using-github-cli-in-workflows):
 
 ```yaml
 name: Report remaining open issues

@@ -1,5 +1,5 @@
-# blog
+# Blog
 
-Listing:
+Posts:
 
-* [Putting The Rust In GitHub Actions](./rusty_github_actions.html)
+* [Putting The Rust In GitHub Actions](./rusty_github_actions.html) (11-01-2024)
