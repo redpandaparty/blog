@@ -22,7 +22,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         @media (prefers-color-scheme: dark) {{
             body {{
                 color: #fafafa;
-                background-color: #111;
+                background-color: #000;
+            }}
+            :link, :visited, :visited:active {{
+                color: #2f81f7;
             }}
         }}
         body {{
